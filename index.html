@@ -3,498 +3,567 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>90 Days Winter Arc 挑戰打卡系統</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>90 Days Winter Arc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --card-border: #30363d;
-      --accent: #58a6ff;
-      --accent-glow: rgba(88, 166, 255, 0.2);
-      --success: #2ea043;
-      --text-main: #f0f6fc;
-      --text-sub: #8b949e;
-      --gold: #f1e05a;
+      --bg: #090a0f;
+      --surface: #12151d;
+      --surface-hover: #181d27;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(255, 255, 255, 0.18);
+      --accent: #38bdf8;
+      --accent-muted: rgba(56, 189, 248, 0.12);
+      --success: #10b981;
+      --text: #f8fafc;
+      --text-sub: #94a3b8;
+      --text-dim: #64748b;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, sans-serif;
     }
 
     body {
       background-color: var(--bg);
-      color: var(--text-main);
-      padding: 24px 16px;
-      line-height: 1.5;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 60px;
     }
 
-    .container {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    /* 頂部 Header & 終極目標卡片 */
-    header {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-
-    header h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, #fff 30%, var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      color: var(--text-sub);
-      font-size: 0.95rem;
-    }
-
-    .goals-summary {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 18px 20px;
-      margin-bottom: 24px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-    }
-
-    .goal-pill {
-      background: rgba(255,255,255,0.03);
-      padding: 10px 14px;
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      font-size: 0.85rem;
-    }
-    .goal-pill strong {
-      display: block;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    /* 進度看板 */
-    .progress-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 20px;
-      margin-bottom: 28px;
+    .app-container {
+      width: 100%;
+      max-width: 680px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 20px;
     }
 
-    .progress-header {
+    /* 頂部 Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-title h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .header-title p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 2px;
+    }
+
+    .overall-badge {
+      text-align: right;
+    }
+
+    .overall-badge .pct {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .overall-badge .label {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* 4 大核心成果快覽 */
+    .goals-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 580px) {
+      .goals-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .goal-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+
+    .goal-item .title {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .goal-item .val {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 天數控制器 */
+    .day-nav {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-weight: 700;
     }
 
-    .progress-bar-bg {
-      background: #21262d;
-      border-radius: 999px;
-      height: 12px;
-      width: 100%;
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover:not(:disabled) {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .day-status-center {
+      text-align: center;
+    }
+
+    .day-indicator {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .day-date-badge {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    /* 每日焦點卡片 */
+    .focus-card {
+      background: linear-gradient(180deg, var(--surface) 0%, rgba(18, 21, 29, 0.6) 100%);
+      border: 1px solid var(--border-active);
+      border-radius: 14px;
+      padding: 18px 20px;
+      position: relative;
       overflow: hidden;
     }
 
-    .progress-bar-fill {
-      background: linear-gradient(90deg, var(--accent), #1f6feb);
+    .focus-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
       height: 100%;
-      width: 0%;
-      transition: width 0.3s ease;
+      background: var(--accent);
     }
 
-    /* 天數導覽 (Pagination / Tabs) */
-    .day-selector-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      gap: 10px;
-    }
-
-    .btn {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: 0.2s;
-    }
-    .btn:hover {
-      background: #21262d;
-      border-color: var(--accent);
-    }
-
-    .current-day-label {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    /* 每日任務區塊 */
-    .task-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    .section-title {
-      font-size: 1.05rem;
+    .focus-tag {
+      display: inline-block;
+      font-size: 0.7rem;
       font-weight: 700;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--accent);
-    }
-
-    .focus-task-box {
-      background: rgba(88, 166, 255, 0.08);
-      border: 1px dashed var(--accent);
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 24px;
-    }
-    .focus-task-box h4 {
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 6px;
-      font-size: 0.95rem;
     }
 
-    .task-list {
+    .focus-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .focus-desc {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    /* 習慣清單區塊 */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      padding: 0 4px;
+    }
+
+    .section-header h2 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+    }
+
+    .section-header .daily-count {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .habit-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 8px;
     }
 
-    .task-item {
+    .habit-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid transparent;
+      align-items: center;
+      gap: 14px;
       cursor: pointer;
-      transition: 0.2s;
-    }
-    .task-item:hover {
-      background: rgba(255,255,255,0.04);
-      border-color: var(--card-border);
+      user-select: none;
+      transition: all 0.15s ease;
     }
 
-    .task-item input[type="checkbox"] {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--text-sub);
+    .habit-row:hover {
+      background: var(--surface-hover);
+      border-color: var(--border-active);
+    }
+
+    .custom-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--text-dim);
       border-radius: 6px;
-      outline: none;
-      cursor: pointer;
-      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      display: grid;
-      place-content: center;
-      transition: 0.2s;
+      transition: all 0.2s ease;
     }
 
-    .task-item input[type="checkbox"]:checked {
-      background-color: var(--success);
+    .custom-checkbox svg {
+      width: 13px;
+      height: 13px;
+      stroke: #fff;
+      stroke-width: 3;
+      stroke-dasharray: 20;
+      stroke-dashoffset: 20;
+      transition: stroke-dashoffset 0.2s ease 0.05s;
+    }
+
+    .habit-text {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.4;
+      flex: 1;
+      transition: all 0.2s;
+    }
+
+    /* 完成狀態 */
+    .habit-row.checked {
+      background: rgba(16, 185, 129, 0.04);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .habit-row.checked .custom-checkbox {
+      background: var(--success);
       border-color: var(--success);
     }
 
-    .task-item input[type="checkbox"]:checked::before {
-      content: "✓";
-      color: #fff;
-      font-size: 13px;
-      font-weight: 800;
+    .habit-row.checked .custom-checkbox svg {
+      stroke-dashoffset: 0;
     }
 
-    .task-label {
-      font-size: 0.95rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .task-item.completed .task-label {
+    .habit-row.checked .habit-text {
+      color: var(--text-dim);
       text-decoration: line-through;
-      color: var(--text-sub);
     }
 
-    /* 心靈與反思輸入框 */
-    .reflection-area {
-      margin-top: 18px;
+    /* 覆盤日記 */
+    .journal-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
-    .reflection-area label {
-      font-size: 0.85rem;
-      color: var(--text-sub);
+
+    .journal-header {
+      font-size: 0.8rem;
       font-weight: 600;
+      color: var(--text-sub);
     }
-    .reflection-area textarea {
+
+    .journal-input {
       width: 100%;
-      height: 70px;
-      background: #0d1117;
-      border: 1px solid var(--card-border);
-      border-radius: 8px;
-      color: var(--text-main);
-      padding: 10px;
-      resize: vertical;
-      font-size: 0.9rem;
-    }
-    .reflection-area textarea:focus {
+      height: 80px;
+      background: transparent;
+      border: none;
       outline: none;
-      border-color: var(--accent);
+      resize: none;
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .journal-input::placeholder {
+      color: var(--text-dim);
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <header>
-    <h1>90-DAY WINTER ARC</h1>
-    <p class="subtitle">自律不是限制，是掌控生活的開端。堅持 90 天，看見全新的自己。</p>
-  </header>
-
-  <!-- 終點成果看板 -->
-  <div class="goals-summary">
-    <div class="goal-pill">
-      <strong>體態目標</strong>
-      56 kg ➔ 51 kg（-5kg / 良好膚況）
+<div class="app-container">
+  <!-- 頂部 Header -->
+  <div class="header">
+    <div class="header-title">
+      <h1>Winter Arc 90</h1>
+      <p>閉關修煉・2026/10/02 – 2026/12/30</p>
     </div>
-    <div class="goal-pill">
-      <strong>學業成就</strong>
-      GPA 3.9↑ / 系排 12.5%
-    </div>
-    <div class="goal-pill">
-      <strong>專業深化</strong>
-      AI 實作 / 英文具體化
-    </div>
-    <div class="goal-pill">
-      <strong>研究與生活</strong>
-      畢專推進 / 作業研究 / 富足心靈
+    <div class="overall-badge">
+      <div class="pct" id="global-pct">0%</div>
+      <div class="label" id="global-sub">0 / 90 DAYS</div>
     </div>
   </div>
 
-  <!-- 進度狀態 -->
-  <div class="progress-card">
-    <div class="progress-header">
-      <span id="progress-text">當前總進度：0 / 90 天 (0%)</span>
-      <span id="today-status" style="color: var(--accent); font-size: 0.9rem;">今日尚未完成</span>
+  <!-- 4 大核心成果快覽 -->
+  <div class="goals-bar">
+    <div class="goal-item">
+      <div class="title">體態目標</div>
+      <div class="val">56kg ➔ 51kg</div>
     </div>
-    <div class="progress-bar-bg">
-      <div id="progress-fill" class="progress-bar-fill"></div>
+    <div class="goal-item">
+      <div class="title">學業</div>
+      <div class="val">GPA 3.9↑ / 12.5%</div>
+    </div>
+    <div class="goal-item">
+      <div class="title">專業</div>
+      <div class="val">AI 專案 & 英文</div>
+    </div>
+    <div class="goal-item">
+      <div class="title">研究</div>
+      <div class="val">畢專 & 作業研究</div>
     </div>
   </div>
 
-  <!-- 天數切換 -->
-  <div class="day-selector-container">
-    <button class="btn" id="prev-btn" onclick="changeDay(-1)">◀ 前一天</button>
-    <div class="current-day-label" id="day-display">Day 1 / 90</div>
-    <button class="btn" id="next-btn" onclick="changeDay(1)">後一天 ▶</button>
+  <!-- 天數切換控制器 -->
+  <div class="day-nav">
+    <button class="nav-btn" id="prev-btn" onclick="switchDay(-1)">← 前一天</button>
+    <div class="day-status-center">
+      <div class="day-indicator" id="day-label">Day 1</div>
+      <div class="day-date-badge" id="day-date-label">2026/10/02 (五)</div>
+    </div>
+    <button class="nav-btn" id="next-btn" onclick="switchDay(1)">後一天 →</button>
   </div>
 
-  <!-- 任務內容 -->
-  <div class="task-card">
-    <!-- 今日核心專注任務（前幾天特別安排目標具體化） -->
-    <div id="focus-block" class="focus-task-box">
-      <h4 id="focus-title">🎯 今日里程碑專注任務</h4>
-      <p id="focus-desc" style="font-size: 0.9rem; color: #c9d1d9;"></p>
-    </div>
+  <!-- 今日焦點里程碑 -->
+  <div class="focus-card">
+    <span class="focus-tag" id="focus-tag">Milestone</span>
+    <h3 class="focus-title" id="focus-title">載入中...</h3>
+    <p class="focus-desc" id="focus-desc">載入中...</p>
+  </div>
 
-    <div class="section-title">⚡ 每日底線習慣打卡 (Daily Non-negotiables)</div>
-    <div class="task-list" id="habits-list">
-      <!-- 透過 JS 動態產生各項習慣 Checklist -->
-    </div>
+  <!-- 習慣清單 -->
+  <div class="section-header">
+    <h2>Daily Habits</h2>
+    <span class="daily-count" id="list-count">0 / 10 完成</span>
+  </div>
 
-    <!-- 睡前反思紀錄 -->
-    <div class="reflection-area">
-      <label>✍️ 起床/睡前 3 件感恩事項與進度覆盤：</label>
-      <textarea id="reflection-input" placeholder="1. 今天順利完成了一次游泳... &#10;2. 專題找到了切入點...&#10;3. 明天待辦事項是..." oninput="saveReflection()"></textarea>
-    </div>
+  <div class="habit-list" id="habit-list"></div>
+
+  <!-- 睡前覆盤 -->
+  <div class="journal-box">
+    <div class="journal-header">今日覆盤與 3 件感恩事項</div>
+    <textarea 
+      class="journal-input" 
+      id="journal-text" 
+      placeholder="寫下今天順利完成的事情，或明天的核心待辦..."
+      oninput="updateJournal()"></textarea>
   </div>
 </div>
 
 <script>
-  // 前 5 天安排「目標具體化」工作，後續進入穩定深潛
-  const dailyFocusMilestones = {
-    1: {
-      title: "🎯 Day 1 啟動日：英文具體目標拆解",
-      desc: "決定 90 天後衡量的英文成果（如：設定好每天聽 15 min 英文 Podcast、挑好 1 套聽力/閱讀教材、或報名 3 個月後的多益/檢定）。"
-    },
-    2: {
-      title: "🎯 Day 2 里程碑：AI 技能路線明確化",
-      desc: "決定 AI 具體目標（例如：挑選 1 個 Side Project 串接 LLM/視覺模型，或是選定刷完 CS 哪一門線上課 / 每週刷 3 題 LeetCode）。"
-    },
-    3: {
-      title: "🎯 Day 3 里程碑：畢業專題 90 天 Roadmap",
-      desc: "將專題切分為 3 個階段（前 30 天：文獻與資料；中 30 天：主架構實驗；後 30 天：數據產出與撰寫）。定下這週的第一個 Deliverable。"
-    },
-    4: {
-      title: "🎯 Day 4 里程碑：作業研究（OR）複習進度表",
-      desc: "盤點以前不懂的章節（如 Linear Programming, Simplex, Duality 等），排定每週 2 個時段把觀念與考古題補齊。"
-    },
-    5: {
-      title: "🎯 Day 5 里程碑：90 天作息與運動課表固化",
-      desc: "檢視前 4 天的生活節奏，正式固定每週游泳 2 次 + 重訓 2 次的排程（例如：二四重訓、三六游泳）。準備好下週所有飲水與飲食規劃。"
-    }
-  };
-
-  // 紙上的日常核心打卡項目
-  const habitsTemplate = [
-    { id: "workout", text: "今日運動（每週目標 4 次：游泳 1500m/40min 或 重訓）" },
-    { id: "water", text: "喝足 3 瓶水（約 2,000 ~ 2,500 ml）" },
-    { id: "no_sugar", text: "戒糖飲料（只喝無糖茶、黑咖啡或水）" },
-    { id: "clean_food", text: "戒炸物 & 超加工零食（原型食物為主）" },
-    { id: "reading", text: "每天閱讀 10–15 頁書" },
-    { id: "skill_study", text: "個人技能學習 / 自主進修 30–45 分鐘" },
-    { id: "screen_bedtime", text: "睡前 30 分鐘不用手機 ➔ 看書 / 伸展拉筋" },
-    { id: "ig_limit", text: "IG + Threads 社群使用時間每日在 30 分鐘以內" },
-    { id: "sleep_time", text: "規律睡眠（12:00 就寢 - 07:00 起床，睡足 7 小時）" },
-    { id: "gratitude", text: "起/睡前 5 分鐘寫 3 件感恩 & 進度待辦" }
-  ];
-
-  let currentDay = 1;
+  // 起始日期：2026 年 10 月 2 日
+  const START_DATE = new Date(2026, 9, 2);
   const totalDays = 90;
 
-  // 讀取 LocalStorage 資料
-  function loadData() {
-    return JSON.parse(localStorage.getItem("winter_arc_90_data") || "{}");
+  const focusData = {
+    1: { tag: "Day 1 拆解", title: "英文具體化：定下 90 天驗收標準", desc: "決定 90 天後的英文指標（如：報名多益/檢定、每天聽 15 分鐘全英文 Podcast 並做一句總結、或精讀 1 篇英文技術論文）。" },
+    2: { tag: "Day 2 拆解", title: "AI 技能拆解：鎖定實作路徑", desc: "決定要完成的 AI 專案或課程（例如：實作一個串接 API 的應用、微調模型、或完整刷完一門核心深度學習課程）。" },
+    3: { tag: "Day 3 拆解", title: "畢業專題：定出第一個月 Milestone", desc: "將畢專切分為三個 30 天區間。明確寫下本週要產出的文獻摘要或 Baseline 程式碼。" },
+    4: { tag: "Day 4 拆解", title: "作業研究（OR）：盤點薄弱觀念", desc: "列出之前卡關的章節（LP、Simplex、Duality 等），固定排入每週兩次 45 分鐘的重讀時段。" },
+    5: { tag: "Day 5 拆解", title: "排程固化：鎖定每週課表", desc: "檢視前幾天執行情況，把游泳（2 次）、重訓（2 次）的固定星期與時段確定下來。" }
+  };
+
+  const habits = [
+    { id: "workout", text: "運動訓練（游泳 1500m/40min 或 重訓）" },
+    { id: "water", text: "喝足 3 瓶水（約 2000–2500ml）" },
+    { id: "no_sugar", text: "戒含糖手搖飲（無糖茶 / 黑咖啡 / 水）" },
+    { id: "clean_diet", text: "戒炸物與超加工零食（原型食物為主）" },
+    { id: "deep_work", text: "自主進修 / 專題 / 作業研究專注 30–45 分鐘" },
+    { id: "reading", text: "閱讀 10–15 頁書" },
+    { id: "social_limit", text: "IG + Threads 每日控制在 30 分鐘以內" },
+    { id: "no_phone_bed", text: "睡前 30 分鐘不用手機 ➔ 看書或拉筋" },
+    { id: "sleep", text: "12:00 就寢 - 07:00 起床（睡足 7 小時）" },
+    { id: "review", text: "起/睡前寫下 3 件感恩與進度覆盤" }
+  ];
+
+  function getDayDateString(dayNumber) {
+    const d = new Date(START_DATE);
+    d.setDate(d.getDate() + (dayNumber - 1));
+    const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const date = String(d.getDate()).padStart(2, '0');
+    const w = weekdays[d.getDay()];
+    return `${y}/${m}/${date} (${w})`;
   }
 
-  function saveData(data) {
-    localStorage.setItem("winter_arc_90_data", JSON.stringify(data));
+  function getTodayDayNumber() {
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const diffTime = today - START_DATE;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    if (diffDays < 1) return 1;
+    if (diffDays > totalDays) return totalDays;
+    return diffDays;
   }
 
-  function renderDay(day) {
-    currentDay = day;
-    document.getElementById("day-display").innerText = `Day ${day} / ${totalDays}`;
-    document.getElementById("prev-btn").disabled = (day === 1);
-    document.getElementById("next-btn").disabled = (day === totalDays);
+  let currentDay = getTodayDayNumber();
 
-    // 焦點任務設定
-    const focusBox = document.getElementById("focus-block");
-    if (dailyFocusMilestones[day]) {
-      focusBox.style.display = "block";
-      document.getElementById("focus-title").innerText = dailyFocusMilestones[day].title;
-      document.getElementById("focus-desc").innerText = dailyFocusMilestones[day].desc;
-    } else {
-      focusBox.style.display = "block";
-      document.getElementById("focus-title").innerText = `🎯 Day ${day} 深度修煉日`;
-      document.getElementById("focus-desc").innerText = "執行日常底線習慣，並專注投入 60–90 分鐘於【畢專 / AI / 作業研究 / 英文】的核心進度。";
-    }
+  function getStore() {
+    return JSON.parse(localStorage.getItem("winter_arc_store") || "{}");
+  }
 
-    // 渲染習慣 Checklist
-    const data = loadData();
-    const dayData = data[day] || { checks: {}, reflection: "" };
-    const listEl = document.getElementById("habits-list");
-    listEl.innerHTML = "";
+  function setStore(data) {
+    localStorage.setItem("winter_arc_store", JSON.stringify(data));
+  }
 
-    habitsTemplate.forEach(habit => {
-      const isChecked = dayData.checks && dayData.checks[habit.id];
-      const item = document.createElement("div");
-      item.className = `task-item ${isChecked ? 'completed' : ''}`;
-      item.onclick = (e) => {
-        if (e.target.tagName !== "INPUT") {
-          const cb = item.querySelector("input");
-          cb.checked = !cb.checked;
-          toggleHabit(habit.id, cb.checked);
-        }
-      };
+  function render() {
+    const store = getStore();
+    const dayData = store[currentDay] || { checks: {}, note: "" };
 
-      item.innerHTML = `
-        <input type="checkbox" id="${habit.id}" ${isChecked ? 'checked' : ''} onchange="toggleHabit('${habit.id}', this.checked)">
-        <label class="task-label" for="${habit.id}">${habit.text}</label>
+    document.getElementById("day-label").innerText = `Day ${currentDay}`;
+    document.getElementById("day-date-label").innerText = getDayDateString(currentDay);
+    document.getElementById("prev-btn").disabled = (currentDay === 1);
+    document.getElementById("next-btn").disabled = (currentDay === totalDays);
+
+    const focus = focusData[currentDay] || {
+      tag: "Focus",
+      title: `Day ${currentDay} 深度修煉`,
+      desc: "專注落實核心習慣，推進 45 分鐘專業領域（畢專/AI/作業研究/英文）。"
+    };
+    document.getElementById("focus-tag").innerText = focus.tag;
+    document.getElementById("focus-title").innerText = focus.title;
+    document.getElementById("focus-desc").innerText = focus.desc;
+
+    const list = document.getElementById("habit-list");
+    list.innerHTML = "";
+    let doneCount = 0;
+
+    habits.forEach(h => {
+      const isDone = !!(dayData.checks && dayData.checks[h.id]);
+      if (isDone) doneCount++;
+
+      const row = document.createElement("div");
+      row.className = `habit-row ${isDone ? 'checked' : ''}`;
+      row.onclick = () => toggleCheck(h.id);
+
+      row.innerHTML = `
+        <div class="custom-checkbox">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <span class="habit-text">${h.text}</span>
       `;
-      listEl.appendChild(item);
+      list.appendChild(row);
     });
 
-    // 渲染反思日記
-    document.getElementById("reflection-input").value = dayData.reflection || "";
+    document.getElementById("list-count").innerText = `${doneCount} / ${habits.length} 完成`;
+    document.getElementById("journal-text").value = dayData.note || "";
 
-    updateProgress();
+    calcGlobalStats();
   }
 
-  function toggleHabit(habitId, checked) {
-    const data = loadData();
-    if (!data[currentDay]) data[currentDay] = { checks: {}, reflection: "" };
-    if (!data[currentDay].checks) data[currentDay].checks = {};
+  function toggleCheck(id) {
+    const store = getStore();
+    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "" };
+    if (!store[currentDay].checks) store[currentDay].checks = {};
 
-    data[currentDay].checks[habitId] = checked;
-    saveData(data);
-    renderDay(currentDay);
+    store[currentDay].checks[id] = !store[currentDay].checks[id];
+    setStore(store);
+    render();
   }
 
-  function saveReflection() {
-    const text = document.getElementById("reflection-input").value;
-    const data = loadData();
-    if (!data[currentDay]) data[currentDay] = { checks: {}, reflection: "" };
-    data[currentDay].reflection = text;
-    saveData(data);
+  function updateJournal() {
+    const store = getStore();
+    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "" };
+    store[currentDay].note = document.getElementById("journal-text").value;
+    setStore(store);
   }
 
-  function changeDay(delta) {
-    const newDay = currentDay + delta;
-    if (newDay >= 1 && newDay <= totalDays) {
-      renderDay(newDay);
+  function switchDay(delta) {
+    const target = currentDay + delta;
+    if (target >= 1 && target <= totalDays) {
+      currentDay = target;
+      render();
     }
   }
 
-  function updateProgress() {
-    const data = loadData();
-    let completedDaysCount = 0;
+  function calcGlobalStats() {
+    const store = getStore();
+    let completedDays = 0;
 
     for (let d = 1; d <= totalDays; d++) {
-      if (data[d] && data[d].checks) {
-        const checkedCount = Object.values(data[d].checks).filter(Boolean).length;
-        // 若該天至少完成 7 個項目，視為達標
-        if (checkedCount >= 7) {
-          completedDaysCount++;
-        }
+      if (store[d] && store[d].checks) {
+        const c = Object.values(store[d].checks).filter(Boolean).length;
+        if (c >= 7) completedDays++;
       }
     }
 
-    const pct = Math.round((completedDaysCount / totalDays) * 100);
-    document.getElementById("progress-fill").style.width = pct + "%";
-    document.getElementById("progress-text").innerText = `已高標完成：${completedDaysCount} / ${totalDays} 天 (${pct}%)`;
-
-    // 今日狀態
-    const todayChecked = data[currentDay] && data[currentDay].checks 
-      ? Object.values(data[currentDay].checks).filter(Boolean).length 
-      : 0;
-    const statusEl = document.getElementById("today-status");
-    if (todayChecked >= 7) {
-      statusEl.innerText = `Day ${currentDay} 已達標 (${todayChecked}/${habitsTemplate.length})`;
-      statusEl.style.color = "var(--success)";
-    } else {
-      statusEl.innerText = `Day ${currentDay} 進行中 (${todayChecked}/${habitsTemplate.length})`;
-      statusEl.style.color = "var(--accent)";
-    }
+    const pct = Math.round((completedDays / totalDays) * 100);
+    document.getElementById("global-pct").innerText = `${pct}%`;
+    document.getElementById("global-sub").innerText = `${completedDays} / ${totalDays} DAYS`;
   }
 
-  // 初始化載入
-  window.onload = () => {
-    renderDay(1);
-  };
+  window.onload = render;
 </script>
 
 </body>
