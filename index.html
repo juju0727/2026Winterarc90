@@ -2,8 +2,15 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Winter Arc '26 — Workspace</title>
+  
+  <!-- iOS 桌面圖示與 Web App 設定 -->
+  <link rel="apple-touch-icon" href="https://img.icons8.com/isometric/512/snowflake.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Winter Arc">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -589,7 +596,7 @@
       <button class="btn-nav" id="next-btn" onclick="switchDay(1)">Next →</button>
     </div>
 
-    <!-- 覆盤專屬提醒 Banner (自動在每週日或第 30/60/90 天顯示) -->
+    <!-- 覆盤提醒 Banner -->
     <div id="review-banner-box" class="review-banner" style="display: none;">
       <div id="review-banner-title" style="font-weight: 700; font-size: 0.95rem;"></div>
       <div id="review-banner-desc" style="font-size: 0.85rem; line-height: 1.4;"></div>
@@ -644,7 +651,6 @@
 
   <!-- ===== 2. ROADMAP & REVIEW SCHEDULE VIEW ===== -->
   <div id="view-roadmap" class="view-container" style="display: none;">
-    <!-- 覆盤機制指南 -->
     <div class="notion-callout" style="background:#fbfbfb;">
       <div class="callout-icon">💡</div>
       <div class="callout-body">
@@ -668,7 +674,7 @@
       <div class="phase-body">
         <div class="phase-item-box">
           <div class="phase-item-title">體態與生活習慣</div>
-          <div class="phase-item-text">減輕 1.5kg（消除水腫）、運動 4 次時段完全定型、0 杯含糖手搖、IG+Threads 螢幕時間每日 30 分鐘內。</div>
+          <div class="phase-item-text">減輕 1.5kg（消除水腫）、運動 4 次時段完全定型、0 杯含糖手搖、IG+Threads 螢幕時間每日控制在 1 小時以內。</div>
         </div>
         <div class="phase-item-box">
           <div class="phase-item-title">學業、研究與專業</div>
@@ -788,7 +794,7 @@
     { id: "clean_diet", text: "戒炸物與超加工零食（原型食物為主）" },
     { id: "deep_work", text: "自主進修 / 專題 / 作業研究專注 30–45 分鐘" },
     { id: "reading", text: "閱讀 10–15 頁書" },
-    { id: "social_limit", text: "IG + Threads 每日控制在 30 分鐘以內" },
+    { id: "social_limit", text: "IG + Threads 每日控制在 1 小時以內" },
     { id: "no_phone_bed", text: "睡前 30 分鐘不用手機 ➔ 看書或拉筋" },
     { id: "sleep", text: "12:00 就寢 - 07:00 起床（睡足 7 小時）" },
     { id: "review", text: "起/睡前寫下 3 件感恩與進度覆盤" }
@@ -873,7 +879,7 @@
       const phaseNum = currentDay === 30 ? 1 : (currentDay === 60 ? 2 : 3);
       const targetWeight = currentDay === 30 ? "54.5kg" : (currentDay === 60 ? "52.8kg" : "51.0kg");
       reviewTitle.innerText = `🔥 今天是 Phase ${phaseNum} 驗收覆盤日！(Day ${currentDay})`;
-      reviewDesc.innerText = `這是整整 30 天的大驗收！請量測早晨空腹體重（目標：${targetWeight}），並回顧本月的學業、OR、畢專與習慣執行率，找我進行階段覆盤。`;
+      reviewDesc.innerText = `整整 30 天的大驗收！請量測早晨空腹體重（目標：${targetWeight}），並回顧本月的學業、OR、畢專與習慣執行率，找我進行階段覆盤。`;
     } else if (isSunday) {
       reviewBox.style.display = "flex";
       reviewBox.className = "review-banner";
@@ -1117,7 +1123,6 @@
         const checks = dData && dData.checks ? Object.values(dData.checks).filter(Boolean).length : 0;
         if (checks >= 7) dots += `<div class="dot dot-success" title="習慣達標"></div>`;
 
-        // 覆盤日標記（週日或 30/60/90 天）
         const isSun = cellDate.getDay() === 0;
         const isPhaseEnd = (diffDays === 30 || diffDays === 60 || diffDays === 90);
         if (isSun || isPhaseEnd) {
