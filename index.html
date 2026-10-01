@@ -3,23 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>90 Days Winter Arc</title>
+  <title>Winter Arc '26 — Workspace</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #090a0f;
-      --surface: #12151d;
-      --surface-hover: #181d27;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(255, 255, 255, 0.18);
-      --accent: #38bdf8;
-      --accent-muted: rgba(56, 189, 248, 0.12);
-      --success: #10b981;
-      --text: #f8fafc;
-      --text-sub: #94a3b8;
-      --text-dim: #64748b;
+      --bg: #ffffff;
+      --text: #37352f;
+      --text-sub: #787774;
+      --text-dim: #9b9a97;
+      --border: #e9e9e7;
+      --border-subtle: #f1f1ef;
+      --hover-bg: #f7f6f3;
+      --active-bg: #efede8;
+      --accent: #2383e2;
+      --accent-tag: #e8f3fc;
+      --green: #0f7b6c;
+      --green-tag: #e6f3ee;
+      --orange: #d9730d;
+      --orange-tag: #faece3;
+      --red-tag: #fbe4e4;
+      --font-mono: 'JetBrains Mono', monospace;
     }
 
     * {
@@ -27,7 +32,7 @@
       margin: 0;
       padding: 0;
       -webkit-tap-highlight-color: transparent;
-      font-family: 'Inter', 'Noto Sans TC', -apple-system, sans-serif;
+      font-family: 'Inter', 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     body {
@@ -36,179 +41,262 @@
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      padding: 32px 16px 60px;
+      padding: 0 16px 80px;
     }
 
-    .app-container {
+    .notion-page {
       width: 100%;
-      max-width: 680px;
+      max-width: 860px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
 
-    /* 頂部 Header */
-    .header {
+    /* Notion Minimalist Banner */
+    .notion-banner {
+      height: 140px;
+      width: 100%;
+      background: linear-gradient(135deg, #f7f6f3 0%, #ebe8e1 100%);
+      border-radius: 0 0 16px 16px;
+      position: relative;
+    }
+
+    .page-header {
+      padding: 0 12px;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border);
+      flex-direction: column;
+      gap: 12px;
+      margin-top: -32px;
     }
 
-    .header-title h1 {
-      font-size: 1.5rem;
+    .page-icon {
+      font-size: 3.2rem;
+      width: fit-content;
+      user-select: none;
+    }
+
+    .page-title {
+      font-size: 2rem;
       font-weight: 700;
+      color: var(--text);
       letter-spacing: -0.02em;
-      color: var(--text);
     }
 
-    .header-title p {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      margin-top: 2px;
-    }
-
-    .overall-badge {
-      text-align: right;
-    }
-
-    .overall-badge .pct {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--accent);
-      font-variant-numeric: tabular-nums;
-    }
-
-    .overall-badge .label {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* 4 大核心成果快覽 */
-    .goals-bar {
+    /* Notion 屬性列 (Page Properties) */
+    .properties-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      grid-template-columns: 140px 1fr;
+      row-gap: 8px;
+      font-size: 0.88rem;
+      padding-top: 6px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
     }
 
-    @media (max-width: 580px) {
-      .goals-bar {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .prop-name {
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
     }
 
-    .goal-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 10px 12px;
-      border-radius: 10px;
+    .prop-value {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    .goal-item .title {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      font-weight: 600;
-      text-transform: uppercase;
+    .notion-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
-    .goal-item .val {
-      font-size: 0.85rem;
-      font-weight: 600;
+    .tag-blue { background: var(--accent-tag); color: #155da1; }
+    .tag-green { background: var(--green-tag); color: var(--green); }
+    .tag-orange { background: var(--orange-tag); color: var(--orange); }
+    .tag-gray { background: var(--hover-bg); color: var(--text-sub); }
+
+    /* Views 分頁標籤 (Notion Database Tabs) */
+    .views-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+    }
+
+    .view-tab {
+      padding: 6px 12px;
+      background: transparent;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-sub);
+      cursor: pointer;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+
+    .view-tab:hover {
+      background: var(--hover-bg);
       color: var(--text);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* 天數控制器 */
-    .day-nav {
-      background: var(--surface);
+    .view-tab.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .view-tab.active::after {
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--text);
+    }
+
+    /* 考試與重要時程 Callout 區塊 */
+    .notion-callout {
+      background: #fafaf9;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 6px;
       padding: 12px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .callout-icon {
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .callout-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .callout-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .nav-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-sub);
-      font-size: 0.9rem;
+    .callout-title {
+      font-size: 0.85rem;
       font-weight: 600;
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: all 0.2s;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .nav-btn:hover:not(:disabled) {
-      background: var(--surface-hover);
+    .btn-text {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .btn-text:hover { text-decoration: underline; }
+
+    .exam-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .exam-chip {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 3px 8px;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .exam-chip .days-left {
+      color: var(--orange);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.78rem;
+    }
+
+    .exam-chip .del-btn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    /* 天數控制器 */
+    .day-selector {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: var(--hover-bg);
+      border-radius: 6px;
+    }
+
+    .btn-nav {
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+      cursor: pointer;
       color: var(--text);
     }
-
-    .nav-btn:disabled {
-      opacity: 0.3;
+    .btn-nav:disabled {
+      opacity: 0.4;
       cursor: not-allowed;
     }
 
-    .day-status-center {
+    .day-info {
       text-align: center;
     }
 
-    .day-indicator {
-      font-size: 1.15rem;
+    .day-heading {
       font-weight: 700;
-      letter-spacing: -0.01em;
+      font-size: 1.05rem;
     }
 
-    .day-date-badge {
-      font-size: 0.8rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-top: 2px;
+    .day-date-str {
+      font-size: 0.78rem;
+      color: var(--text-sub);
     }
 
-    /* 每日焦點卡片 */
-    .focus-card {
-      background: linear-gradient(180deg, var(--surface) 0%, rgba(18, 21, 29, 0.6) 100%);
-      border: 1px solid var(--border-active);
-      border-radius: 14px;
-      padding: 18px 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .focus-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--accent);
-    }
-
-    .focus-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
+    /* 里程碑 / 焦點提示 Callout */
+    .focus-callout {
+      background: #fdfdfc;
+      border-left: 3px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .focus-title {
-      font-size: 1rem;
+      font-size: 0.92rem;
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 6px;
     }
 
     .focus-desc {
@@ -217,212 +305,398 @@
       line-height: 1.5;
     }
 
-    /* 習慣清單區塊 */
-    .section-header {
+    /* 雙欄版面 (To-Do & Habit Tracker) */
+    .columns-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 720px) {
+      .columns-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+    }
+
+    .column-box {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .column-header {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 6px;
-      padding: 0 4px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
-    .section-header h2 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-dim);
-    }
-
-    .section-header .daily-count {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-sub);
-    }
-
-    .habit-list {
+    /* Notion 經典 Checkbox 樣式 */
+    .notion-item {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
       gap: 8px;
+      padding: 4px 6px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    .notion-item:hover {
+      background: var(--hover-bg);
     }
 
-    .habit-row {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.15s ease;
-    }
-
-    .habit-row:hover {
-      background: var(--surface-hover);
-      border-color: var(--border-active);
-    }
-
-    .custom-checkbox {
-      width: 22px;
-      height: 22px;
-      border: 2px solid var(--text-dim);
-      border-radius: 6px;
+    .notion-check-box {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--text-dim);
+      border-radius: 3px;
+      margin-top: 3px;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       flex-shrink: 0;
-      transition: all 0.2s ease;
+      transition: all 0.15s;
+      background: #ffffff;
     }
 
-    .custom-checkbox svg {
-      width: 13px;
-      height: 13px;
+    .notion-item.checked .notion-check-box {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .notion-check-box svg {
+      width: 11px;
+      height: 11px;
       stroke: #fff;
-      stroke-width: 3;
-      stroke-dasharray: 20;
-      stroke-dashoffset: 20;
-      transition: stroke-dashoffset 0.2s ease 0.05s;
+      stroke-width: 2.5;
+      display: none;
     }
 
-    .habit-text {
+    .notion-item.checked .notion-check-box svg {
+      display: block;
+    }
+
+    .notion-item-text {
       font-size: 0.92rem;
-      font-weight: 500;
       color: var(--text);
-      line-height: 1.4;
+      line-height: 1.45;
       flex: 1;
-      transition: all 0.2s;
+      cursor: pointer;
     }
 
-    /* 完成狀態 */
-    .habit-row.checked {
-      background: rgba(16, 185, 129, 0.04);
-      border-color: rgba(16, 185, 129, 0.2);
-    }
-
-    .habit-row.checked .custom-checkbox {
-      background: var(--success);
-      border-color: var(--success);
-    }
-
-    .habit-row.checked .custom-checkbox svg {
-      stroke-dashoffset: 0;
-    }
-
-    .habit-row.checked .habit-text {
+    .notion-item.checked .notion-item-text {
       color: var(--text-dim);
       text-decoration: line-through;
     }
 
-    /* 覆盤日記 */
-    .journal-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
+    .btn-delete-item {
+      opacity: 0;
+      border: none;
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 0 4px;
+      transition: opacity 0.15s;
+    }
+    .notion-item:hover .btn-delete-item {
+      opacity: 1;
+    }
+
+    /* 待辦事項輸入框 */
+    .notion-new-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+    }
+
+    .notion-input-field {
+      border: none;
+      outline: none;
+      font-size: 0.92rem;
+      width: 100%;
+      color: var(--text);
+      background: transparent;
+    }
+    .notion-input-field::placeholder {
+      color: var(--text-dim);
+    }
+
+    /* 覆盤筆記區塊 */
+    .notes-section {
       display: flex;
       flex-direction: column;
       gap: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-subtle);
     }
 
-    .journal-header {
-      font-size: 0.8rem;
+    .notes-label {
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-sub);
     }
 
-    .journal-input {
+    .notion-textarea {
       width: 100%;
-      height: 80px;
-      background: transparent;
-      border: none;
-      outline: none;
-      resize: none;
+      min-height: 80px;
+      background: var(--hover-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
       color: var(--text);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       line-height: 1.6;
+      resize: vertical;
+      outline: none;
+    }
+    .notion-textarea:focus {
+      background: #ffffff;
+      border-color: var(--text-dim);
     }
 
-    .journal-input::placeholder {
+    /* 週檢視與月曆 */
+    .view-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    .cal-weekday {
+      font-size: 0.75rem;
+      font-weight: 600;
       color: var(--text-dim);
+      padding-bottom: 6px;
+    }
+
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      position: relative;
+    }
+    .cal-cell:hover:not(.empty) { background: var(--hover-bg); }
+    .cal-cell.is-selected { border-color: var(--text-dim); background: var(--hover-bg); font-weight: 700; }
+    .cal-cell.empty { cursor: default; }
+
+    .cal-dots {
+      display: flex;
+      gap: 3px;
+      margin-top: 3px;
+      height: 4px;
+    }
+    .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+    .dot-success { background: var(--green); }
+    .dot-exam { background: var(--orange); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 15, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 360px;
+      padding: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
   </style>
 </head>
 <body>
 
-<div class="app-container">
-  <!-- 頂部 Header -->
-  <div class="header">
-    <div class="header-title">
-      <h1>Winter Arc 90</h1>
-      <p>閉關修煉・2026/10/02 – 2026/12/30</p>
-    </div>
-    <div class="overall-badge">
-      <div class="pct" id="global-pct">0%</div>
-      <div class="label" id="global-sub">0 / 90 DAYS</div>
+<div class="notion-page">
+  <!-- 簡潔 Notion 頂部橫幅 -->
+  <div class="notion-banner"></div>
+
+  <!-- 頁面標題與屬性 -->
+  <div class="page-header">
+    <div class="page-icon">❄️</div>
+    <h1 class="page-title">Winter Arc '26</h1>
+
+    <div class="properties-grid">
+      <div class="prop-name"><span>📅</span> 挑戰區間</div>
+      <div class="prop-value">
+        <span class="notion-tag tag-gray">2026/10/02 → 2026/12/30</span>
+      </div>
+
+      <div class="prop-name"><span>📊</span> 達成狀態</div>
+      <div class="prop-value">
+        <span class="notion-tag tag-blue" id="prop-pct">0% 完成</span>
+        <span class="notion-tag tag-gray" id="prop-count">0 / 90 Days</span>
+      </div>
+
+      <div class="prop-name"><span>🎯</span> 核心指標</div>
+      <div class="prop-value">
+        <span class="notion-tag tag-orange">56kg ➔ 51kg</span>
+        <span class="notion-tag tag-blue">GPA 3.9↑ / 12.5%</span>
+        <span class="notion-tag tag-green">AI 專案 & 英文</span>
+        <span class="notion-tag tag-gray">畢專 & 作業研究</span>
+      </div>
     </div>
   </div>
 
-  <!-- 4 大核心成果快覽 -->
-  <div class="goals-bar">
-    <div class="goal-item">
-      <div class="title">體態目標</div>
-      <div class="val">56kg ➔ 51kg</div>
-    </div>
-    <div class="goal-item">
-      <div class="title">學業</div>
-      <div class="val">GPA 3.9↑ / 12.5%</div>
-    </div>
-    <div class="goal-item">
-      <div class="title">專業</div>
-      <div class="val">AI 專案 & 英文</div>
-    </div>
-    <div class="goal-item">
-      <div class="title">研究</div>
-      <div class="val">畢專 & 作業研究</div>
+  <!-- 考試與重要時程 Callout -->
+  <div class="notion-callout">
+    <div class="callout-icon">📌</div>
+    <div class="callout-body">
+      <div class="callout-head">
+        <span class="callout-title">重要考試與時程倒數</span>
+        <button class="btn-text" onclick="openExamModal()">+ 新增時程</button>
+      </div>
+      <div class="exam-chips" id="exams-container"></div>
     </div>
   </div>
 
-  <!-- 天數切換控制器 -->
-  <div class="day-nav">
-    <button class="nav-btn" id="prev-btn" onclick="switchDay(-1)">← 前一天</button>
-    <div class="day-status-center">
-      <div class="day-indicator" id="day-label">Day 1</div>
-      <div class="day-date-badge" id="day-date-label">2026/10/02 (五)</div>
+  <!-- Notion 視圖切換標籤 -->
+  <div class="views-bar">
+    <button class="view-tab active" id="tab-daily" onclick="switchView('daily')">📋 Daily Focus</button>
+    <button class="view-tab" id="tab-week" onclick="switchView('week')">📅 Weekly</button>
+    <button class="view-tab" id="tab-month" onclick="switchView('month')">🗓 Monthly</button>
+  </div>
+
+  <!-- ===== 1. DAILY FOCUS VIEW ===== -->
+  <div id="view-daily" class="view-container">
+    <!-- 天數切換控制器 -->
+    <div class="day-selector">
+      <button class="btn-nav" id="prev-btn" onclick="switchDay(-1)">← Prev</button>
+      <div class="day-info">
+        <div class="day-heading" id="day-label">Day 1</div>
+        <div class="day-date-str" id="day-date-label">2026/10/02 (五)</div>
+      </div>
+      <button class="btn-nav" id="next-btn" onclick="switchDay(1)">Next →</button>
     </div>
-    <button class="nav-btn" id="next-btn" onclick="switchDay(1)">後一天 →</button>
+
+    <!-- 焦點里程碑提示 -->
+    <div class="focus-callout" id="focus-box">
+      <div class="focus-title" id="focus-title">載入中...</div>
+      <div class="focus-desc" id="focus-desc">載入中...</div>
+    </div>
+
+    <!-- 雙欄版面：左邊晨間待辦，右邊自律習慣 -->
+    <div class="columns-layout">
+      <!-- 左欄：晨間起床待辦事項 -->
+      <div class="column-box">
+        <div class="column-header">
+          <span>Today's Actions</span>
+          <span id="todo-count" style="font-weight: 500;">0/0</span>
+        </div>
+        
+        <div id="todo-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+
+        <!-- 新增輸入欄位 -->
+        <div class="notion-new-input">
+          <span style="color: var(--text-dim); font-size: 0.9rem;">+</span>
+          <input 
+            type="text" 
+            class="notion-input-field" 
+            id="todo-input" 
+            placeholder="起床新增今日待辦... (Enter 送出)" 
+            onkeydown="if(event.key==='Enter') addTodo()">
+        </div>
+      </div>
+
+      <!-- 右欄：90 天自律底線習慣 -->
+      <div class="column-box">
+        <div class="column-header">
+          <span>Daily Habits</span>
+          <span id="habit-count" style="font-weight: 500;">0/10</span>
+        </div>
+        <div id="habit-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
+      </div>
+    </div>
+
+    <!-- 覆盤與感恩筆記 -->
+    <div class="notes-section">
+      <div class="notes-label">✍️ 睡前覆盤與 3 件感恩事項</div>
+      <textarea 
+        class="notion-textarea" 
+        id="journal-input" 
+        placeholder="寫下今天順利完成的事項、小收穫或明日待辦..." 
+        oninput="updateJournal()"></textarea>
+    </div>
   </div>
 
-  <!-- 今日焦點里程碑 -->
-  <div class="focus-card">
-    <span class="focus-tag" id="focus-tag">Milestone</span>
-    <h3 class="focus-title" id="focus-title">載入中...</h3>
-    <p class="focus-desc" id="focus-desc">載入中...</p>
+  <!-- ===== 2. WEEKLY VIEW ===== -->
+  <div id="view-week" class="view-container" style="display: none;">
+    <div class="day-selector">
+      <button class="btn-nav" onclick="changeWeek(-1)">← 上一週</button>
+      <div class="day-heading" id="week-title">Week 1</div>
+      <button class="btn-nav" onclick="changeWeek(1)">下一週 →</button>
+    </div>
+    <div id="week-list" style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;"></div>
   </div>
 
-  <!-- 習慣清單 -->
-  <div class="section-header">
-    <h2>Daily Habits</h2>
-    <span class="daily-count" id="list-count">0 / 10 完成</span>
+  <!-- ===== 3. MONTHLY VIEW ===== -->
+  <div id="view-month" class="view-container" style="display: none;">
+    <div class="day-selector">
+      <button class="btn-nav" onclick="changeMonth(-1)">←</button>
+      <div class="day-heading" id="cal-month-title">2026 年 10 月</div>
+      <button class="btn-nav" onclick="changeMonth(1)">→</button>
+    </div>
+    <div class="cal-grid" id="calendar-grid"></div>
   </div>
+</div>
 
-  <div class="habit-list" id="habit-list"></div>
-
-  <!-- 睡前覆盤 -->
-  <div class="journal-box">
-    <div class="journal-header">今日覆盤與 3 件感恩事項</div>
-    <textarea 
-      class="journal-input" 
-      id="journal-text" 
-      placeholder="寫下今天順利完成的事情，或明天的核心待辦..."
-      oninput="updateJournal()"></textarea>
+<!-- 新增考試 Modal -->
+<div class="modal-overlay" id="exam-modal">
+  <div class="modal-content">
+    <div style="font-weight: 700; font-size: 1rem;">新增考試 / 重要 Deadline</div>
+    <div style="display:flex; flex-direction:column; gap:4px;">
+      <label style="font-size:0.78rem; color:var(--text-sub);">時程名稱</label>
+      <input type="text" id="modal-name" class="notion-textarea" style="min-height:36px; padding:6px 10px;" placeholder="例如：作業研究期中考、多益檢定">
+    </div>
+    <div style="display:flex; flex-direction:column; gap:4px;">
+      <label style="font-size:0.78rem; color:var(--text-sub);">日期</label>
+      <input type="date" id="modal-date" class="notion-textarea" style="min-height:36px; padding:6px 10px;" value="2026-11-15">
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <button class="btn-nav" onclick="closeExamModal()">取消</button>
+      <button class="btn-nav" style="background:var(--accent); color:#fff; border-color:var(--accent);" onclick="saveExam()">儲存</button>
+    </div>
   </div>
 </div>
 
 <script>
-  // 起始日期：2026 年 10 月 2 日
-  const START_DATE = new Date(2026, 9, 2);
+  const START_DATE = new Date(2026, 9, 2); // 2026/10/02
   const totalDays = 90;
 
   const focusData = {
@@ -446,16 +720,11 @@
     { id: "review", text: "起/睡前寫下 3 件感恩與進度覆盤" }
   ];
 
-  function getDayDateString(dayNumber) {
-    const d = new Date(START_DATE);
-    d.setDate(d.getDate() + (dayNumber - 1));
-    const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const date = String(d.getDate()).padStart(2, '0');
-    const w = weekdays[d.getDay()];
-    return `${y}/${m}/${date} (${w})`;
-  }
+  let currentView = 'daily';
+  let currentDay = getTodayDayNumber();
+  let currentCalYear = 2026;
+  let currentCalMonth = 9;
+  let currentWeekOffset = 0;
 
   function getTodayDayNumber() {
     const now = new Date();
@@ -467,87 +736,355 @@
     return diffDays;
   }
 
-  let currentDay = getTodayDayNumber();
+  function getDateForDay(dNum) {
+    const d = new Date(START_DATE);
+    d.setDate(d.getDate() + (dNum - 1));
+    return d;
+  }
+
+  function getDayDateString(dNum) {
+    const d = getDateForDay(dNum);
+    const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const date = String(d.getDate()).padStart(2, '0');
+    const w = weekdays[d.getDay()];
+    return `${y}/${m}/${date} (${w})`;
+  }
 
   function getStore() {
-    return JSON.parse(localStorage.getItem("winter_arc_store") || "{}");
+    return JSON.parse(localStorage.getItem("winter_arc_notion_store") || "{}");
   }
 
   function setStore(data) {
-    localStorage.setItem("winter_arc_store", JSON.stringify(data));
+    localStorage.setItem("winter_arc_notion_store", JSON.stringify(data));
   }
 
-  function render() {
+  /* 視圖切換 */
+  function switchView(view) {
+    currentView = view;
+    document.querySelectorAll('.view-tab').forEach(b => b.classList.remove('active'));
+    document.getElementById(`tab-${view}`).classList.add('active');
+
+    document.getElementById('view-daily').style.display = view === 'daily' ? 'flex' : 'none';
+    document.getElementById('view-week').style.display = view === 'week' ? 'flex' : 'none';
+    document.getElementById('view-month').style.display = view === 'month' ? 'flex' : 'none';
+
+    if (view === 'daily') renderDailyView();
+    if (view === 'week') renderWeekView();
+    if (view === 'month') renderMonthView();
+  }
+
+  /* 渲染日視圖 */
+  function renderDailyView() {
     const store = getStore();
-    const dayData = store[currentDay] || { checks: {}, note: "" };
+    const dayData = store[currentDay] || { checks: {}, note: "", todos: [] };
 
     document.getElementById("day-label").innerText = `Day ${currentDay}`;
     document.getElementById("day-date-label").innerText = getDayDateString(currentDay);
     document.getElementById("prev-btn").disabled = (currentDay === 1);
     document.getElementById("next-btn").disabled = (currentDay === totalDays);
 
-    const focus = focusData[currentDay] || {
-      tag: "Focus",
+    const m = focusData[currentDay] || {
       title: `Day ${currentDay} 深度修煉`,
-      desc: "專注落實核心習慣，推進 45 分鐘專業領域（畢專/AI/作業研究/英文）。"
+      desc: "專注落實核心底線習慣，推進 45 分鐘專業領域（畢專/AI/作業研究/英文）。"
     };
-    document.getElementById("focus-tag").innerText = focus.tag;
-    document.getElementById("focus-title").innerText = focus.title;
-    document.getElementById("focus-desc").innerText = focus.desc;
+    document.getElementById("focus-title").innerText = m.title;
+    document.getElementById("focus-desc").innerText = m.desc;
 
-    const list = document.getElementById("habit-list");
-    list.innerHTML = "";
-    let doneCount = 0;
+    // 待辦渲染
+    renderTodos(dayData.todos || []);
+
+    // 習慣渲染
+    const habitContainer = document.getElementById("habit-list");
+    habitContainer.innerHTML = "";
+    let doneHabits = 0;
 
     habits.forEach(h => {
       const isDone = !!(dayData.checks && dayData.checks[h.id]);
-      if (isDone) doneCount++;
+      if (isDone) doneHabits++;
 
-      const row = document.createElement("div");
-      row.className = `habit-row ${isDone ? 'checked' : ''}`;
-      row.onclick = () => toggleCheck(h.id);
+      const item = document.createElement("div");
+      item.className = `notion-item ${isDone ? 'checked' : ''}`;
+      item.onclick = () => toggleHabit(h.id);
 
-      row.innerHTML = `
-        <div class="custom-checkbox">
+      item.innerHTML = `
+        <div class="notion-check-box">
           <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7"/></svg>
         </div>
-        <span class="habit-text">${h.text}</span>
+        <span class="notion-item-text">${h.text}</span>
       `;
-      list.appendChild(row);
+      habitContainer.appendChild(item);
     });
 
-    document.getElementById("list-count").innerText = `${doneCount} / ${habits.length} 完成`;
-    document.getElementById("journal-text").value = dayData.note || "";
+    document.getElementById("habit-count").innerText = `${doneHabits}/${habits.length}`;
+    document.getElementById("journal-input").value = dayData.note || "";
 
-    calcGlobalStats();
+    calcStats();
+    renderExams();
   }
 
-  function toggleCheck(id) {
+  function toggleHabit(id) {
     const store = getStore();
-    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "" };
+    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "", todos: [] };
     if (!store[currentDay].checks) store[currentDay].checks = {};
 
     store[currentDay].checks[id] = !store[currentDay].checks[id];
     setStore(store);
-    render();
-  }
-
-  function updateJournal() {
-    const store = getStore();
-    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "" };
-    store[currentDay].note = document.getElementById("journal-text").value;
-    setStore(store);
+    renderDailyView();
   }
 
   function switchDay(delta) {
     const target = currentDay + delta;
     if (target >= 1 && target <= totalDays) {
       currentDay = target;
-      render();
+      renderDailyView();
     }
   }
 
-  function calcGlobalStats() {
+  function updateJournal() {
+    const store = getStore();
+    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "", todos: [] };
+    store[currentDay].note = document.getElementById("journal-input").value;
+    setStore(store);
+  }
+
+  /* 待辦事項 */
+  function renderTodos(todos) {
+    const container = document.getElementById("todo-list");
+    container.innerHTML = "";
+
+    todos.forEach((t, i) => {
+      const item = document.createElement("div");
+      item.className = `notion-item ${t.done ? 'checked' : ''}`;
+      item.innerHTML = `
+        <div class="notion-check-box" onclick="toggleTodo(${i})">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <span class="notion-item-text" onclick="toggleTodo(${i})">${escapeHtml(t.text)}</span>
+        <button class="btn-delete-item" onclick="deleteTodo(${i})">×</button>
+      `;
+      container.appendChild(item);
+    });
+
+    const doneCount = todos.filter(t => t.done).length;
+    document.getElementById("todo-count").innerText = `${doneCount}/${todos.length}`;
+  }
+
+  function addTodo() {
+    const input = document.getElementById("todo-input");
+    const val = input.value.trim();
+    if (!val) return;
+
+    const store = getStore();
+    if (!store[currentDay]) store[currentDay] = { checks: {}, note: "", todos: [] };
+    if (!store[currentDay].todos) store[currentDay].todos = [];
+
+    store[currentDay].todos.push({ text: val, done: false });
+    setStore(store);
+    input.value = "";
+    renderDailyView();
+  }
+
+  function toggleTodo(i) {
+    const store = getStore();
+    if (store[currentDay] && store[currentDay].todos && store[currentDay].todos[i]) {
+      store[currentDay].todos[i].done = !store[currentDay].todos[i].done;
+      setStore(store);
+      renderDailyView();
+    }
+  }
+
+  function deleteTodo(i) {
+    const store = getStore();
+    if (store[currentDay] && store[currentDay].todos) {
+      store[currentDay].todos.splice(i, 1);
+      setStore(store);
+      renderDailyView();
+    }
+  }
+
+  /* 週檢視 */
+  function renderWeekView() {
+    const container = document.getElementById("week-list");
+    container.innerHTML = "";
+    const store = getStore();
+
+    const baseDay = Math.min(Math.max(currentDay + currentWeekOffset * 7, 1), totalDays);
+    const baseDate = getDateForDay(baseDay);
+    const sundayDate = new Date(baseDate);
+    sundayDate.setDate(baseDate.getDate() - baseDate.getDay());
+
+    const weekStartDay = Math.floor((sundayDate - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+    document.getElementById("week-title").innerText = `Week ${Math.ceil(baseDay / 7)}`;
+
+    for (let i = 0; i < 7; i++) {
+      const dNum = weekStartDay + i;
+      if (dNum < 1 || dNum > totalDays) continue;
+
+      const dateStr = getDayDateString(dNum);
+      const dayData = store[dNum] || { checks: {}, todos: [] };
+      const checkedHabits = dayData.checks ? Object.values(dayData.checks).filter(Boolean).length : 0;
+      const doneTodos = (dayData.todos || []).filter(t => t.done).length;
+
+      const item = document.createElement("div");
+      item.className = "notion-item";
+      item.style.padding = "8px 10px";
+      item.style.border = "1px solid var(--border-subtle)";
+      item.style.borderRadius = "6px";
+      item.style.background = (dNum === currentDay) ? "var(--hover-bg)" : "transparent";
+      item.style.cursor = "pointer";
+      item.onclick = () => { currentDay = dNum; switchView('daily'); };
+
+      item.innerHTML = `
+        <div style="flex:1;">
+          <div style="font-weight:600; font-size:0.9rem;">Day ${dNum} · ${dateStr}</div>
+          <div style="font-size:0.75rem; color:var(--text-sub); margin-top:2px;">待辦完成：${doneTodos} 項</div>
+        </div>
+        <span class="notion-tag ${checkedHabits >= 7 ? 'tag-green' : 'tag-gray'}">
+          習慣 ${checkedHabits}/10
+        </span>
+      `;
+      container.appendChild(item);
+    }
+  }
+
+  function changeWeek(delta) {
+    currentWeekOffset += delta;
+    renderWeekView();
+  }
+
+  /* 月曆 */
+  function renderMonthView() {
+    const grid = document.getElementById("calendar-grid");
+    grid.innerHTML = "";
+
+    const months = ["1 月", "2 月", "3 月", "4 月", "5 月", "6 月", "7 月", "8 月", "9 月", "10 月", "11 月", "12 月"];
+    document.getElementById("cal-month-title").innerText = `${currentCalYear} 年 ${months[currentCalMonth]}`;
+
+    const weekdays = ["日", "一", "二", "三", "四", "五", "六"];
+    weekdays.forEach(w => {
+      const h = document.createElement("div");
+      h.className = "cal-weekday";
+      h.innerText = w;
+      grid.appendChild(h);
+    });
+
+    const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
+    const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const empty = document.createElement("div");
+      empty.className = "cal-cell empty";
+      grid.appendChild(empty);
+    }
+
+    const store = getStore();
+    const exams = getExams();
+
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cellDate = new Date(currentCalYear, currentCalMonth, day);
+      const diffDays = Math.floor((cellDate - START_DATE) / (1000 * 60 * 60 * 24)) + 1;
+      const inProgram = (diffDays >= 1 && diffDays <= totalDays);
+
+      const cell = document.createElement("div");
+      cell.className = `cal-cell ${inProgram && diffDays === currentDay ? 'is-selected' : ''}`;
+
+      let dots = `<div class="cal-dots">`;
+      if (inProgram) {
+        const dData = store[diffDays];
+        const checks = dData && dData.checks ? Object.values(dData.checks).filter(Boolean).length : 0;
+        if (checks >= 7) dots += `<div class="dot dot-success"></div>`;
+      }
+
+      const dateISO = `${currentCalYear}-${String(currentCalMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      if (exams.some(e => e.date === dateISO)) dots += `<div class="dot dot-exam"></div>`;
+      dots += `</div>`;
+
+      cell.innerHTML = `<span>${day}</span>${dots}`;
+      if (inProgram) {
+        cell.onclick = () => { currentDay = diffDays; switchView('daily'); };
+      }
+      grid.appendChild(cell);
+    }
+  }
+
+  function changeMonth(delta) {
+    currentCalMonth += delta;
+    if (currentCalMonth < 9 && currentCalYear === 2026) currentCalMonth = 9;
+    if (currentCalMonth > 11 && currentCalYear === 2026) currentCalMonth = 11;
+    renderMonthView();
+  }
+
+  /* 考試時程 */
+  function getExams() {
+    return JSON.parse(localStorage.getItem("winter_arc_notion_exams") || "[]");
+  }
+
+  function saveExams(list) {
+    localStorage.setItem("winter_arc_notion_exams", JSON.stringify(list));
+  }
+
+  function renderExams() {
+    const exams = getExams();
+    const container = document.getElementById("exams-container");
+    container.innerHTML = "";
+
+    if (exams.length === 0) {
+      container.innerHTML = `<span style="font-size:0.8rem; color:var(--text-dim);">尚未設定時程，點右上角「+ 新增時程」加入。</span>`;
+      return;
+    }
+
+    const today = new Date();
+    const todayZero = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    exams.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    exams.forEach((ex, idx) => {
+      const exDate = new Date(ex.date);
+      const diffTime = exDate - todayZero;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      let txt = diffDays > 0 ? `還有 ${diffDays} 天` : (diffDays === 0 ? "今天！" : "已結束");
+
+      const chip = document.createElement("div");
+      chip.className = "exam-chip";
+      chip.innerHTML = `
+        <span>${escapeHtml(ex.name)} (${ex.date})</span>
+        <span class="days-left">${txt}</span>
+        <button class="del-btn" onclick="deleteExam(${idx})">×</button>
+      `;
+      container.appendChild(chip);
+    });
+  }
+
+  function openExamModal() { document.getElementById("exam-modal").style.display = "flex"; }
+  function closeExamModal() { document.getElementById("exam-modal").style.display = "none"; }
+
+  function saveExam() {
+    const name = document.getElementById("modal-name").value.trim();
+    const date = document.getElementById("modal-date").value;
+    if (!name || !date) return;
+
+    const exams = getExams();
+    exams.push({ name, date });
+    saveExams(exams);
+
+    document.getElementById("modal-name").value = "";
+    closeExamModal();
+    renderExams();
+    if (currentView === 'month') renderMonthView();
+  }
+
+  function deleteExam(idx) {
+    const exams = getExams();
+    exams.splice(idx, 1);
+    saveExams(exams);
+    renderExams();
+    if (currentView === 'month') renderMonthView();
+  }
+
+  function calcStats() {
     const store = getStore();
     let completedDays = 0;
 
@@ -559,11 +1096,15 @@
     }
 
     const pct = Math.round((completedDays / totalDays) * 100);
-    document.getElementById("global-pct").innerText = `${pct}%`;
-    document.getElementById("global-sub").innerText = `${completedDays} / ${totalDays} DAYS`;
+    document.getElementById("prop-pct").innerText = `${pct}% 完成`;
+    document.getElementById("prop-count").innerText = `${completedDays} / ${totalDays} Days`;
   }
 
-  window.onload = render;
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  window.onload = renderDailyView;
 </script>
 
 </body>
