@@ -23,7 +23,8 @@
       --green-tag: #e6f3ee;
       --orange: #d9730d;
       --orange-tag: #faece3;
-      --red-tag: #fbe4e4;
+      --purple: #6940a5;
+      --purple-tag: #eae4f8;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -52,7 +53,6 @@
       gap: 24px;
     }
 
-    /* Notion Minimalist Banner */
     .notion-banner {
       height: 140px;
       width: 100%;
@@ -82,7 +82,6 @@
       letter-spacing: -0.02em;
     }
 
-    /* Notion 屬性列 (Page Properties) */
     .properties-grid {
       display: grid;
       grid-template-columns: 140px 1fr;
@@ -118,15 +117,16 @@
     .tag-blue { background: var(--accent-tag); color: #155da1; }
     .tag-green { background: var(--green-tag); color: var(--green); }
     .tag-orange { background: var(--orange-tag); color: var(--orange); }
+    .tag-purple { background: var(--purple-tag); color: var(--purple); }
     .tag-gray { background: var(--hover-bg); color: var(--text-sub); }
 
-    /* Views 分頁標籤 (Notion Database Tabs) */
     .views-bar {
       display: flex;
       align-items: center;
       gap: 4px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 2px;
+      overflow-x: auto;
     }
 
     .view-tab {
@@ -142,18 +142,11 @@
       align-items: center;
       gap: 6px;
       position: relative;
+      white-space: nowrap;
     }
 
-    .view-tab:hover {
-      background: var(--hover-bg);
-      color: var(--text);
-    }
-
-    .view-tab.active {
-      color: var(--text);
-      font-weight: 600;
-    }
-
+    .view-tab:hover { background: var(--hover-bg); color: var(--text); }
+    .view-tab.active { color: var(--text); font-weight: 600; }
     .view-tab.active::after {
       content: "";
       position: absolute;
@@ -164,7 +157,7 @@
       background: var(--text);
     }
 
-    /* 考試與重要時程 Callout 區塊 */
+    /* 考試時程 Callout */
     .notion-callout {
       background: #fafaf9;
       border: 1px solid var(--border);
@@ -175,31 +168,10 @@
       align-items: flex-start;
     }
 
-    .callout-icon {
-      font-size: 1.1rem;
-      line-height: 1.4;
-    }
-
-    .callout-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .callout-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .callout-title {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-sub);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+    .callout-icon { font-size: 1.1rem; line-height: 1.4; }
+    .callout-body { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .callout-head { display: flex; justify-content: space-between; align-items: center; }
+    .callout-title { font-size: 0.85rem; font-weight: 600; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.04em; }
 
     .btn-text {
       background: none;
@@ -209,15 +181,9 @@
       cursor: pointer;
       font-weight: 600;
     }
-
     .btn-text:hover { text-decoration: underline; }
 
-    .exam-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
+    .exam-chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .exam-chip {
       background: #ffffff;
       border: 1px solid var(--border);
@@ -263,26 +229,27 @@
       cursor: pointer;
       color: var(--text);
     }
-    .btn-nav:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
+    .btn-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .day-info { text-align: center; }
+    .day-heading { font-weight: 700; font-size: 1.05rem; }
+    .day-date-str { font-size: 0.78rem; color: var(--text-sub); }
+
+    /* 覆盤專屬 Callout Banner */
+    .review-banner {
+      background: #f0f7ff;
+      border-left: 3px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .review-banner.phase-review {
+      background: #fbf5ee;
+      border-left-color: var(--orange);
     }
 
-    .day-info {
-      text-align: center;
-    }
-
-    .day-heading {
-      font-weight: 700;
-      font-size: 1.05rem;
-    }
-
-    .day-date-str {
-      font-size: 0.78rem;
-      color: var(--text-sub);
-    }
-
-    /* 里程碑 / 焦點提示 Callout */
     .focus-callout {
       background: #fdfdfc;
       border-left: 3px solid var(--accent);
@@ -293,19 +260,9 @@
       gap: 4px;
     }
 
-    .focus-title {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--text);
-    }
+    .focus-title { font-size: 0.92rem; font-weight: 600; color: var(--text); }
+    .focus-desc { font-size: 0.85rem; color: var(--text-sub); line-height: 1.5; }
 
-    .focus-desc {
-      font-size: 0.85rem;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-
-    /* 雙欄版面 (To-Do & Habit Tracker) */
     .columns-layout {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -313,17 +270,10 @@
     }
 
     @media (max-width: 720px) {
-      .columns-layout {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
+      .columns-layout { grid-template-columns: 1fr; gap: 20px; }
     }
 
-    .column-box {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .column-box { display: flex; flex-direction: column; gap: 12px; }
 
     .column-header {
       font-size: 0.85rem;
@@ -338,7 +288,6 @@
       border-bottom: 1px solid var(--border-subtle);
     }
 
-    /* Notion 經典 Checkbox 樣式 */
     .notion-item {
       display: flex;
       align-items: flex-start;
@@ -347,9 +296,7 @@
       border-radius: 4px;
       transition: background 0.15s;
     }
-    .notion-item:hover {
-      background: var(--hover-bg);
-    }
+    .notion-item:hover { background: var(--hover-bg); }
 
     .notion-check-box {
       width: 16px;
@@ -379,9 +326,7 @@
       display: none;
     }
 
-    .notion-item.checked .notion-check-box svg {
-      display: block;
-    }
+    .notion-item.checked .notion-check-box svg { display: block; }
 
     .notion-item-text {
       font-size: 0.92rem;
@@ -406,11 +351,8 @@
       padding: 0 4px;
       transition: opacity 0.15s;
     }
-    .notion-item:hover .btn-delete-item {
-      opacity: 1;
-    }
+    .notion-item:hover .btn-delete-item { opacity: 1; }
 
-    /* 待辦事項輸入框 */
     .notion-new-input {
       display: flex;
       align-items: center;
@@ -426,11 +368,8 @@
       color: var(--text);
       background: transparent;
     }
-    .notion-input-field::placeholder {
-      color: var(--text-dim);
-    }
+    .notion-input-field::placeholder { color: var(--text-dim); }
 
-    /* 覆盤筆記區塊 */
     .notes-section {
       display: flex;
       flex-direction: column;
@@ -439,11 +378,7 @@
       border-top: 1px solid var(--border-subtle);
     }
 
-    .notes-label {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--text-sub);
-    }
+    .notes-label { font-size: 0.82rem; font-weight: 600; color: var(--text-sub); }
 
     .notion-textarea {
       width: 100%;
@@ -458,17 +393,9 @@
       resize: vertical;
       outline: none;
     }
-    .notion-textarea:focus {
-      background: #ffffff;
-      border-color: var(--text-dim);
-    }
+    .notion-textarea:focus { background: #ffffff; border-color: var(--text-dim); }
 
-    /* 週檢視與月曆 */
-    .view-container {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .view-container { display: flex; flex-direction: column; gap: 14px; }
 
     .cal-grid {
       display: grid;
@@ -478,12 +405,7 @@
       margin-top: 8px;
     }
 
-    .cal-weekday {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      padding-bottom: 6px;
-    }
+    .cal-weekday { font-size: 0.75rem; font-weight: 600; color: var(--text-dim); padding-bottom: 6px; }
 
     .cal-cell {
       aspect-ratio: 1;
@@ -502,19 +424,76 @@
     .cal-cell.is-selected { border-color: var(--text-dim); background: var(--hover-bg); font-weight: 700; }
     .cal-cell.empty { cursor: default; }
 
-    .cal-dots {
-      display: flex;
-      gap: 3px;
-      margin-top: 3px;
-      height: 4px;
-    }
-    .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-    }
+    .cal-dots { display: flex; gap: 3px; margin-top: 3px; height: 4px; }
+    .dot { width: 4px; height: 4px; border-radius: 50%; }
     .dot-success { background: var(--green); }
     .dot-exam { background: var(--orange); }
+    .dot-review { background: var(--accent); }
+
+    /* Roadmap 卡片 */
+    .phase-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .phase-card.active-phase {
+      border-color: var(--accent);
+      background: #fcfdfe;
+    }
+
+    .phase-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 8px;
+    }
+
+    .phase-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phase-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 600px) {
+      .phase-body { grid-template-columns: 1fr; }
+    }
+
+    .phase-item-box {
+      background: var(--hover-bg);
+      border-radius: 6px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .phase-item-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+
+    .phase-item-text {
+      color: var(--text);
+      line-height: 1.4;
+    }
 
     /* Modal */
     .modal-overlay {
@@ -544,10 +523,9 @@
 <body>
 
 <div class="notion-page">
-  <!-- 簡潔 Notion 頂部橫幅 -->
   <div class="notion-banner"></div>
 
-  <!-- 頁面標題與屬性 -->
+  <!-- 標題與屬性 -->
   <div class="page-header">
     <div class="page-icon">❄️</div>
     <h1 class="page-title">Winter Arc '26</h1>
@@ -558,13 +536,19 @@
         <span class="notion-tag tag-gray">2026/10/02 → 2026/12/30</span>
       </div>
 
+      <div class="prop-name"><span>⚡</span> 當前階段</div>
+      <div class="prop-value">
+        <span class="notion-tag tag-purple" id="prop-phase-badge">Phase 1: 適應與固化期</span>
+        <span class="notion-tag tag-orange" id="prop-target-weight">階段目標：54.5 kg</span>
+      </div>
+
       <div class="prop-name"><span>📊</span> 達成狀態</div>
       <div class="prop-value">
         <span class="notion-tag tag-blue" id="prop-pct">0% 完成</span>
         <span class="notion-tag tag-gray" id="prop-count">0 / 90 Days</span>
       </div>
 
-      <div class="prop-name"><span>🎯</span> 核心指標</div>
+      <div class="prop-name"><span>🎯</span> 終極目標</div>
       <div class="prop-value">
         <span class="notion-tag tag-orange">56kg ➔ 51kg</span>
         <span class="notion-tag tag-blue">GPA 3.9↑ / 12.5%</span>
@@ -574,7 +558,7 @@
     </div>
   </div>
 
-  <!-- 考試與重要時程 Callout -->
+  <!-- 考試時程 Callout -->
   <div class="notion-callout">
     <div class="callout-icon">📌</div>
     <div class="callout-body">
@@ -589,13 +573,13 @@
   <!-- Notion 視圖切換標籤 -->
   <div class="views-bar">
     <button class="view-tab active" id="tab-daily" onclick="switchView('daily')">📋 Daily Focus</button>
+    <button class="view-tab" id="tab-roadmap" onclick="switchView('roadmap')">🎯 30天階段 Roadmap & 覆盤時程</button>
     <button class="view-tab" id="tab-week" onclick="switchView('week')">📅 Weekly</button>
     <button class="view-tab" id="tab-month" onclick="switchView('month')">🗓 Monthly</button>
   </div>
 
   <!-- ===== 1. DAILY FOCUS VIEW ===== -->
   <div id="view-daily" class="view-container">
-    <!-- 天數切換控制器 -->
     <div class="day-selector">
       <button class="btn-nav" id="prev-btn" onclick="switchDay(-1)">← Prev</button>
       <div class="day-info">
@@ -603,6 +587,12 @@
         <div class="day-date-str" id="day-date-label">2026/10/02 (五)</div>
       </div>
       <button class="btn-nav" id="next-btn" onclick="switchDay(1)">Next →</button>
+    </div>
+
+    <!-- 覆盤專屬提醒 Banner (自動在每週日或第 30/60/90 天顯示) -->
+    <div id="review-banner-box" class="review-banner" style="display: none;">
+      <div id="review-banner-title" style="font-weight: 700; font-size: 0.95rem;"></div>
+      <div id="review-banner-desc" style="font-size: 0.85rem; line-height: 1.4;"></div>
     </div>
 
     <!-- 焦點里程碑提示 -->
@@ -613,16 +603,13 @@
 
     <!-- 雙欄版面：左邊晨間待辦，右邊自律習慣 -->
     <div class="columns-layout">
-      <!-- 左欄：晨間起床待辦事項 -->
+      <!-- 左欄：晨間待辦事項 -->
       <div class="column-box">
         <div class="column-header">
           <span>Today's Actions</span>
           <span id="todo-count" style="font-weight: 500;">0/0</span>
         </div>
-        
         <div id="todo-list" style="display: flex; flex-direction: column; gap: 2px;"></div>
-
-        <!-- 新增輸入欄位 -->
         <div class="notion-new-input">
           <span style="color: var(--text-dim); font-size: 0.9rem;">+</span>
           <input 
@@ -634,7 +621,7 @@
         </div>
       </div>
 
-      <!-- 右欄：90 天自律底線習慣 -->
+      <!-- 右欄：90 天自律習慣 -->
       <div class="column-box">
         <div class="column-header">
           <span>Daily Habits</span>
@@ -655,7 +642,94 @@
     </div>
   </div>
 
-  <!-- ===== 2. WEEKLY VIEW ===== -->
+  <!-- ===== 2. ROADMAP & REVIEW SCHEDULE VIEW ===== -->
+  <div id="view-roadmap" class="view-container" style="display: none;">
+    <!-- 覆盤機制指南 -->
+    <div class="notion-callout" style="background:#fbfbfb;">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <div class="callout-title" style="color:var(--accent);">覆盤排程系統說明</div>
+        <div style="font-size:0.85rem; color:var(--text); line-height:1.5;">
+          • <strong>每週日（Weekly Review）</strong>：每週日晚上自動提醒，花 5 分鐘回顧本週運動次數與習慣達標率，調整下週行程。<br>
+          • <strong>每 30 天大里程碑覆盤（Phase Review）</strong>：Day 30 (10/31)、Day 60 (11/30)、Day 90 (12/30)，全面驗收體重、OR、畢專與 AI 成果。
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="phase-card active-phase" id="phase-1-card">
+      <div class="phase-head">
+        <div class="phase-title">
+          <span>Phase 1：適應與固化期</span>
+          <span class="notion-tag tag-purple">Day 1 – 30 (10/02 – 10/31)</span>
+        </div>
+        <span class="notion-tag tag-orange">目標：56kg ➔ 54.5kg</span>
+      </div>
+      <div class="phase-body">
+        <div class="phase-item-box">
+          <div class="phase-item-title">體態與生活習慣</div>
+          <div class="phase-item-text">減輕 1.5kg（消除水腫）、運動 4 次時段完全定型、0 杯含糖手搖、IG+Threads 螢幕時間每日 30 分鐘內。</div>
+        </div>
+        <div class="phase-item-box">
+          <div class="phase-item-title">學業、研究與專業</div>
+          <div class="phase-item-text">英文與 AI 規格確定並開始執行、作業研究（LP、Simplex 基礎概念）徹底補齊、畢業專題產出文獻回顧與架構圖。</div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-sub); border-top:1px dashed var(--border); padding-top:8px;">
+        📌 <strong>Phase 1 驗收日</strong>：2026/10/31 (Day 30) ➔ 驗收 54.5kg 與英文/AI/畢專初期成果。
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-card" id="phase-2-card">
+      <div class="phase-head">
+        <div class="phase-title">
+          <span>Phase 2：強度加壓與期中衝刺期</span>
+          <span class="notion-tag tag-gray">Day 31 – 60 (11/01 – 11/30)</span>
+        </div>
+        <span class="notion-tag tag-orange">目標：54.5kg ➔ 52.8kg</span>
+      </div>
+      <div class="phase-body">
+        <div class="phase-item-box">
+          <div class="phase-item-title">體態與生活習慣</div>
+          <div class="phase-item-text">累計減重 3.2kg、臉部線條緊緻、游泳 1500m 提速、重訓維持漸進負荷、即使遇考試週仍穩守 12:00 就寢。</div>
+        </div>
+        <div class="phase-item-box">
+          <div class="phase-item-title">學業、研究與專業</div>
+          <div class="phase-item-text">期中考以 A+ 衝刺鎖定 GPA 3.9+、OR 攻克對偶理論與敏感度分析、專題完成核心 Coding 跑出第一版實驗數據。</div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-sub); border-top:1px dashed var(--border); padding-top:8px;">
+        📌 <strong>Phase 2 驗收日</strong>：2026/11/30 (Day 60) ➔ 驗收 52.8kg、期中考成績與專題實驗數據。
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-card" id="phase-3-card">
+      <div class="phase-head">
+        <div class="phase-title">
+          <span>Phase 3：整合收穫與驗收期</span>
+          <span class="notion-tag tag-gray">Day 61 – 90 (12/01 – 12/30)</span>
+        </div>
+        <span class="notion-tag tag-orange">目標：52.8kg ➔ 51.0kg (達標！)</span>
+      </div>
+      <div class="phase-body">
+        <div class="phase-item-box">
+          <div class="phase-item-title">體態與生活習慣</div>
+          <div class="phase-item-text">達成 51kg 終極體重、體脂顯著下降、乾淨飲食與早睡無痛內化為本能、掌控生活的富足心靈。</div>
+        </div>
+        <div class="phase-item-box">
+          <div class="phase-item-title">學業、研究與專業</div>
+          <div class="phase-item-text">畢業專題數據完整產出並完成初稿與 Slide、AI 專案發布 Demo 與 Repo、OR 補齊所有盲區期末衝刺、系排 12.5% 達標。</div>
+        </div>
+      </div>
+      <div style="font-size:0.8rem; color:var(--text-sub); border-top:1px dashed var(--border); padding-top:8px;">
+        📌 <strong>Phase 3 驗收日</strong>：2026/12/30 (Day 90) ➔ 跨年終極成果驗收，90 天完全脫胎換骨！
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 3. WEEKLY VIEW ===== -->
   <div id="view-week" class="view-container" style="display: none;">
     <div class="day-selector">
       <button class="btn-nav" onclick="changeWeek(-1)">← 上一週</button>
@@ -665,7 +739,7 @@
     <div id="week-list" style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;"></div>
   </div>
 
-  <!-- ===== 3. MONTHLY VIEW ===== -->
+  <!-- ===== 4. MONTHLY VIEW ===== -->
   <div id="view-month" class="view-container" style="display: none;">
     <div class="day-selector">
       <button class="btn-nav" onclick="changeMonth(-1)">←</button>
@@ -760,22 +834,22 @@
     localStorage.setItem("winter_arc_notion_store", JSON.stringify(data));
   }
 
-  /* 視圖切換 */
   function switchView(view) {
     currentView = view;
     document.querySelectorAll('.view-tab').forEach(b => b.classList.remove('active'));
     document.getElementById(`tab-${view}`).classList.add('active');
 
     document.getElementById('view-daily').style.display = view === 'daily' ? 'flex' : 'none';
+    document.getElementById('view-roadmap').style.display = view === 'roadmap' ? 'flex' : 'none';
     document.getElementById('view-week').style.display = view === 'week' ? 'flex' : 'none';
     document.getElementById('view-month').style.display = view === 'month' ? 'flex' : 'none';
 
     if (view === 'daily') renderDailyView();
+    if (view === 'roadmap') renderRoadmapView();
     if (view === 'week') renderWeekView();
     if (view === 'month') renderMonthView();
   }
 
-  /* 渲染日視圖 */
   function renderDailyView() {
     const store = getStore();
     const dayData = store[currentDay] || { checks: {}, note: "", todos: [] };
@@ -785,6 +859,30 @@
     document.getElementById("prev-btn").disabled = (currentDay === 1);
     document.getElementById("next-btn").disabled = (currentDay === totalDays);
 
+    const currentDateObj = getDateForDay(currentDay);
+    const isSunday = currentDateObj.getDay() === 0;
+    const isPhaseReviewDay = (currentDay === 30 || currentDay === 60 || currentDay === 90);
+
+    const reviewBox = document.getElementById("review-banner-box");
+    const reviewTitle = document.getElementById("review-banner-title");
+    const reviewDesc = document.getElementById("review-banner-desc");
+
+    if (isPhaseReviewDay) {
+      reviewBox.style.display = "flex";
+      reviewBox.className = "review-banner phase-review";
+      const phaseNum = currentDay === 30 ? 1 : (currentDay === 60 ? 2 : 3);
+      const targetWeight = currentDay === 30 ? "54.5kg" : (currentDay === 60 ? "52.8kg" : "51.0kg");
+      reviewTitle.innerText = `🔥 今天是 Phase ${phaseNum} 驗收覆盤日！(Day ${currentDay})`;
+      reviewDesc.innerText = `這是整整 30 天的大驗收！請量測早晨空腹體重（目標：${targetWeight}），並回顧本月的學業、OR、畢專與習慣執行率，找我進行階段覆盤。`;
+    } else if (isSunday) {
+      reviewBox.style.display = "flex";
+      reviewBox.className = "review-banner";
+      reviewTitle.innerText = `⚡ 每週日微覆盤日 (Weekly Review)`;
+      reviewDesc.innerText = `今晚睡前花 5 分鐘檢視過去 7 天的運動次數與習慣達標率，把下週的游泳、重訓時段與核心待辦排定好！`;
+    } else {
+      reviewBox.style.display = "none";
+    }
+
     const m = focusData[currentDay] || {
       title: `Day ${currentDay} 深度修煉`,
       desc: "專注落實核心底線習慣，推進 45 分鐘專業領域（畢專/AI/作業研究/英文）。"
@@ -792,10 +890,21 @@
     document.getElementById("focus-title").innerText = m.title;
     document.getElementById("focus-desc").innerText = m.desc;
 
-    // 待辦渲染
+    const phaseBadge = document.getElementById("prop-phase-badge");
+    const targetWeight = document.getElementById("prop-target-weight");
+    if (currentDay <= 30) {
+      phaseBadge.innerText = "Phase 1: 適應與固化期";
+      targetWeight.innerText = "階段目標：54.5 kg";
+    } else if (currentDay <= 60) {
+      phaseBadge.innerText = "Phase 2: 強度加壓與期中衝刺期";
+      targetWeight.innerText = "階段目標：52.8 kg";
+    } else {
+      phaseBadge.innerText = "Phase 3: 整合收穫與驗收期";
+      targetWeight.innerText = "階段目標：51.0 kg (達標)";
+    }
+
     renderTodos(dayData.todos || []);
 
-    // 習慣渲染
     const habitContainer = document.getElementById("habit-list");
     habitContainer.innerHTML = "";
     let doneHabits = 0;
@@ -824,6 +933,12 @@
     renderExams();
   }
 
+  function renderRoadmapView() {
+    document.getElementById("phase-1-card").className = `phase-card ${currentDay <= 30 ? 'active-phase' : ''}`;
+    document.getElementById("phase-2-card").className = `phase-card ${currentDay > 30 && currentDay <= 60 ? 'active-phase' : ''}`;
+    document.getElementById("phase-3-card").className = `phase-card ${currentDay > 60 ? 'active-phase' : ''}`;
+  }
+
   function toggleHabit(id) {
     const store = getStore();
     if (!store[currentDay]) store[currentDay] = { checks: {}, note: "", todos: [] };
@@ -849,7 +964,6 @@
     setStore(store);
   }
 
-  /* 待辦事項 */
   function renderTodos(todos) {
     const container = document.getElementById("todo-list");
     container.innerHTML = "";
@@ -904,7 +1018,6 @@
     }
   }
 
-  /* 週檢視 */
   function renderWeekView() {
     const container = document.getElementById("week-list");
     container.innerHTML = "";
@@ -923,6 +1036,9 @@
       if (dNum < 1 || dNum > totalDays) continue;
 
       const dateStr = getDayDateString(dNum);
+      const isSunday = (i === 0);
+      const isPhaseReview = (dNum === 30 || dNum === 60 || dNum === 90);
+
       const dayData = store[dNum] || { checks: {}, todos: [] };
       const checkedHabits = dayData.checks ? Object.values(dayData.checks).filter(Boolean).length : 0;
       const doneTodos = (dayData.todos || []).filter(t => t.done).length;
@@ -936,9 +1052,15 @@
       item.style.cursor = "pointer";
       item.onclick = () => { currentDay = dNum; switchView('daily'); };
 
+      let reviewBadge = "";
+      if (isPhaseReview) reviewBadge = `<span class="notion-tag tag-orange" style="margin-left:6px;">Phase 驗收日</span>`;
+      else if (isSunday) reviewBadge = `<span class="notion-tag tag-blue" style="margin-left:6px;">週覆盤</span>`;
+
       item.innerHTML = `
         <div style="flex:1;">
-          <div style="font-weight:600; font-size:0.9rem;">Day ${dNum} · ${dateStr}</div>
+          <div style="font-weight:600; font-size:0.9rem;">
+            Day ${dNum} · ${dateStr} ${reviewBadge}
+          </div>
           <div style="font-size:0.75rem; color:var(--text-sub); margin-top:2px;">待辦完成：${doneTodos} 項</div>
         </div>
         <span class="notion-tag ${checkedHabits >= 7 ? 'tag-green' : 'tag-gray'}">
@@ -954,7 +1076,6 @@
     renderWeekView();
   }
 
-  /* 月曆 */
   function renderMonthView() {
     const grid = document.getElementById("calendar-grid");
     grid.innerHTML = "";
@@ -994,11 +1115,18 @@
       if (inProgram) {
         const dData = store[diffDays];
         const checks = dData && dData.checks ? Object.values(dData.checks).filter(Boolean).length : 0;
-        if (checks >= 7) dots += `<div class="dot dot-success"></div>`;
+        if (checks >= 7) dots += `<div class="dot dot-success" title="習慣達標"></div>`;
+
+        // 覆盤日標記（週日或 30/60/90 天）
+        const isSun = cellDate.getDay() === 0;
+        const isPhaseEnd = (diffDays === 30 || diffDays === 60 || diffDays === 90);
+        if (isSun || isPhaseEnd) {
+          dots += `<div class="dot dot-review" title="${isPhaseEnd ? '階段大覆盤' : '週覆盤'}"></div>`;
+        }
       }
 
       const dateISO = `${currentCalYear}-${String(currentCalMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-      if (exams.some(e => e.date === dateISO)) dots += `<div class="dot dot-exam"></div>`;
+      if (exams.some(e => e.date === dateISO)) dots += `<div class="dot dot-exam" title="考試"></div>`;
       dots += `</div>`;
 
       cell.innerHTML = `<span>${day}</span>${dots}`;
@@ -1016,7 +1144,6 @@
     renderMonthView();
   }
 
-  /* 考試時程 */
   function getExams() {
     return JSON.parse(localStorage.getItem("winter_arc_notion_exams") || "[]");
   }
